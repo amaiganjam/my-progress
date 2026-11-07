@@ -1,5 +1,5 @@
 'use strict';
-const CACHE = 'my-progress-shell-v12';
+const CACHE = 'my-progress-shell-v13';
 const FILES = ['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./icon-180-mono.png','./icon-192-mono.png','./icon-512-mono.png'];
 self.addEventListener('install',event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting())));
 self.addEventListener('activate',event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('my-progress-shell-') && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));

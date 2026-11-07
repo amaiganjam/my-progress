@@ -30,9 +30,8 @@ function progress(start, now = Date.now()) {
   const first = new Date(start), current = new Date(now);
   const firstMonth = first.getFullYear() * 12 + first.getMonth();
   const currentMonth = current.getFullYear() * 12 + current.getMonth();
-  const monthStart = new Date(first.getFullYear(), first.getMonth(), 1).getTime();
-  const firstFullMonth = firstMonth + (start > monthStart ? 1 : 0);
-  return { days: Math.floor((now-start)/DAY), months: Math.max(0, currentMonth - firstFullMonth) };
+  const firstFullMonth = firstMonth + (first.getDate() === 1 ? 0 : 1);
+  return { days: (dayIndex(current) - dayIndex(first)), months: Math.max(0, currentMonth - firstFullMonth) };
 }
 function sprintProgress(days) {
   return (days ?? 0) % 10;
@@ -68,9 +67,12 @@ function render() {
   $('edit').setAttribute('aria-label', action);
   $('edit').title = action;
 }
+function dayIndex(date) {
+  return Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / DAY;
+}
 function localValue(date) {
   const d = new Date(date);
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}T${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 const tabs = [...document.querySelectorAll('[role=tab]')];
 tabs.forEach((tab,i) => {
@@ -94,8 +96,8 @@ $('cancel').onclick = () => $('editor').close();
 $('now').onclick = () => { $('last-input').max = localValue(Date.now()); $('last-input').value = localValue(Date.now()); $('error').textContent = ''; };
 $('date-form').onsubmit = event => {
   event.preventDefault();
-  const value = new Date($('last-input').value).getTime();
-  if (!Number.isFinite(value) || value < 0 || value > Date.now()) { $('error').textContent = 'Choose a valid date and time that is not in the future.'; return; }
+  const value = new Date($('last-input').value + 'T00:00:00').getTime();
+  if (!Number.isFinite(value) || value < 0 || value > Date.now()) { $('error').textContent = 'Choose a valid date that is not in the future.'; return; }
   state.dates[state.selected] = value;
   const saved = persist(); render(); $('editor').close();
   if (saved) $('status').textContent = '';
