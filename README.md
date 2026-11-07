@@ -1,6 +1,6 @@
 # My Progress
 
-A mobile-first installable PWA with exactly three tabs: Quit Smoking, Quit Drinking, Quit Weed. No build tools, dependencies, accounts, analytics, or backend. All runtime assets are included.
+A mobile-first installable PWA with four tabs: Quit Drinking, Quit Smoking, Quit Weed, Quit Porn. No build tools, dependencies, accounts, analytics, or backend. All runtime assets are included.
 
 ## Run on a computer
 
@@ -38,7 +38,7 @@ Apple's official guide: https://support.apple.com/guide/iphone/open-as-web-app-i
 
 ## Use
 
-Choose a tab → **Set last-use date** → choose the local date/time → save. Each tab has its own date. To restart after using again, choose **Edit / reset last-use date**, select a date or **Use right now**, and save. Cancel or Escape leaves the date unchanged. The timer updates every second and recalculates immediately after returning to the app; days are elapsed 24-hour periods, followed by remaining hours and minutes. It does not need to run in the background. Dates are stored as absolute timestamps and displayed in your current local time zone.
+Choose a tab → tap the calendar button → choose the local date/time → save. Each tab has its own date. To restart after using again, tap the calendar button, select a date or **Use right now**, and save. Cancel or Escape leaves the date unchanged. The timer updates every second and recalculates immediately after returning to the app; only whole elapsed days are shown. The progress bar follows the current calendar month. Press and hold it to see the day of the month and the total days, such as 7/30 on November 7. Full Months Completed counts only finished calendar months covered in full since your last-use date. For example, if you quit on September 6, only October counts on November 7. Dates are stored as absolute timestamps and displayed in your current local time zone.
 
 ## Local data
 
@@ -48,11 +48,6 @@ Dates and the selected tab are kept in localStorage across ordinary launches. No
 
 Replace the hosted files and change the CACHE version in sw.js when editing app assets. Reopen online, then close and reopen the app after the new service worker installs. Storage uses a separate key and is retained during normal updates.
 
-## Verification performed
+## Replacing an earlier version
 
-- JavaScript syntax checks for app.js and sw.js.
-- Automated checks: day/hour/minute arithmetic, independent dates for all three tabs, storage reload, future-date rejection, manifest/icon references.
-- In-app browser: initial state, date editor, use-right-now/save, separate unset tracker, selection and saved-date persistence after reload.
-- Offline browser reload with local HTTP server stopped; timer continued advancing.
-- Visual inspection of the app card and controls.
-- Physical iPhone installation and device-specific storage/offline behavior still need the steps above.
+Upload the new files to the same GitHub repository and replace the old files. Keep the same website address and Home Screen icon to retain the dates already stored on your phone. Once GitHub Pages has published the update, open My Progress while online, wait a few seconds, close it, and reopen it. 
