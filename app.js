@@ -34,10 +34,8 @@ function progress(start, now = Date.now()) {
   const firstFullMonth = firstMonth + (start > monthStart ? 1 : 0);
   return { days: Math.floor((now-start)/DAY), months: Math.max(0, currentMonth - firstFullMonth) };
 }
-function calendarProgress(now = new Date()) {
-  const monthDays = now.getDate();
-  const totalDays = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-  return { monthDays, totalDays, percent: 100 * monthDays / totalDays };
+function sprintProgress(days) {
+  return (days ?? 0) % 10;
 }
 
 let lastTrack, lastMonthCount;
@@ -59,9 +57,9 @@ function render() {
   $('days').textContent = result.days === null ? '—' : result.days.toLocaleString();
   $('unit').textContent = unit;
   $('day-description').textContent = result.days === null ? 'Last-use date not set' : `${result.days} ${unit}`;
-  const calendar = calendarProgress();
-  $('arc').style.width = `${calendar.percent}%`;
-  $('month-detail').textContent = `(${calendar.monthDays}/${calendar.totalDays})`;
+  const sprintDays = sprintProgress(result.days);
+  $('arc').style.width = `${sprintDays * 10}%`;
+  $('month-detail').textContent = `(${sprintDays}/10)`;
   if (result.months !== lastMonthCount) {
     $('months').textContent = result.months;
     lastMonthCount = result.months;

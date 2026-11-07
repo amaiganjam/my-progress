@@ -38,7 +38,7 @@ Apple's official guide: https://support.apple.com/guide/iphone/open-as-web-app-i
 
 ## Use
 
-Choose a tab → tap the calendar button → choose the local date/time → save. Each tab has its own date. To restart after using again, tap the calendar button, select a date or **Use right now**, and save. Cancel or Escape leaves the date unchanged. The timer updates every second and recalculates immediately after returning to the app; only whole elapsed days are shown. The progress bar follows the current calendar month. The label always shows the day of the month and the total days, such as Progress this month (7/30) on November 7. Full Months Completed counts only finished calendar months covered in full since your last-use date. For example, if you quit on September 6, only October counts on November 7. Dates are stored as absolute timestamps and displayed in your current local time zone.
+Choose a tab → tap the calendar button → choose the local date/time → save. Each tab has its own date. To restart after using again, tap the calendar button, select a date or **Use right now**, and save. Cancel or Escape leaves the date unchanged. The timer updates every second and recalculates immediately after returning to the app; only whole elapsed days are shown. Current Sprint shows progress through a repeating 10-day block based on whole elapsed days since your last use. Day 9 shows 9/10; day 10 starts the next sprint at 0/10 while the headline streak continues. Full Months Completed counts only finished calendar months covered in full since your last-use date. For example, if you quit on September 6, only October counts on November 7. Dates are stored as absolute timestamps and displayed in your current local time zone.
 
 ## Local data
 
