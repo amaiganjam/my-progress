@@ -51,7 +51,6 @@ function render() {
   if (lastTrack !== selected) {
     $('category-icon').innerHTML = `<svg viewBox="0 0 24 24">${icons[selected]}</svg>`;
     lastTrack = selected;
-    $('month-detail').hidden = true;
 
   }
   const date = state.dates[selected];
@@ -62,7 +61,7 @@ function render() {
   $('day-description').textContent = result.days === null ? 'Last-use date not set' : `${result.days} ${unit}`;
   const calendar = calendarProgress();
   $('arc').style.width = `${calendar.percent}%`;
-  $('month-detail').textContent = `${calendar.monthDays}/${calendar.totalDays} days completed this month`;
+  $('month-detail').textContent = `(${calendar.monthDays}/${calendar.totalDays})`;
   if (result.months !== lastMonthCount) {
     $('months').textContent = result.months;
     lastMonthCount = result.months;
@@ -103,29 +102,6 @@ $('date-form').onsubmit = event => {
   const saved = persist(); render(); $('editor').close();
   if (saved) $('status').textContent = '';
 };
-const bar = $('gauge');
-const reveal = show => { $('month-detail').hidden = !show; };
-bar.addEventListener('pointerdown', event => {
-  if (!event.isPrimary || event.button !== 0) return;
-  bar.setPointerCapture(event.pointerId);
-  reveal(true);
-});
-for (const type of ['pointerup', 'pointercancel', 'lostpointercapture', 'blur']) {
-  bar.addEventListener(type, () => reveal(false));
-}
-bar.addEventListener('contextmenu', event => event.preventDefault());
-bar.addEventListener('keydown', event => {
-  if (event.key === ' ' || event.key === 'Enter') {
-    event.preventDefault();
-    reveal(true);
-  }
-  if (event.key === 'Escape') reveal(false);
-});
-bar.addEventListener('keyup', event => {
-  if (event.key === ' ' || event.key === 'Enter') reveal(false);
-});
-window.addEventListener('blur', () => reveal(false));
-document.addEventListener('visibilitychange', () => { if (document.hidden) reveal(false); });
 render();
 if (!storageOK) persist();
 setInterval(render,1000);
